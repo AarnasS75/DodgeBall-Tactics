@@ -7,11 +7,11 @@ public class UnitActionSystem : MonoBehaviour
 {
     public static UnitActionSystem Instance { get; private set; }
 
-
     [SerializeField] private Unit selectedUnit;
     [SerializeField] private LayerMask unitMask;
 
     public event EventHandler OnSelectedUnitChanged;
+
     private void Awake()
     {
         if(Instance == null)
@@ -30,7 +30,12 @@ public class UnitActionSystem : MonoBehaviour
         {
             if (TryHandleUnitSelection()) return;
 
-            selectedUnit.Move(MouseWorld.GetPosition());
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+
+            if (selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
+            {
+                selectedUnit.GetMoveAction().Move(mouseGridPosition);
+            }
         }
     }
     private bool TryHandleUnitSelection()
@@ -38,7 +43,7 @@ public class UnitActionSystem : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if(Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, unitMask))
         {
-            if(hit.transform.TryGetComponent<Unit>(out Unit unit))
+            if(hit.transform.TryGetComponent(out Unit unit))
             {
                 SetSelectedUnit(unit);
                 return true;
