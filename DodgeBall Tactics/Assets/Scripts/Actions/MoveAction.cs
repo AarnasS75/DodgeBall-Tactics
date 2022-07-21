@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveAction : MonoBehaviour
+public class MoveAction : BaseAction
 {
     [SerializeField] private Animator animator;
 
@@ -14,13 +14,11 @@ public class MoveAction : MonoBehaviour
 
     float stoppingDistance = 0.1f;
 
-    private Unit unit;
-
     private Vector3 targetPosition;
 
-    private void Awake()
+    protected override void Awake()
     {
-        unit = GetComponent<Unit>();
+        base.Awake();   // To also run parent Awake and not only override completely
         targetPosition = transform.position;
     }
     private void Update()
