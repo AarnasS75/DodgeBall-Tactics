@@ -23,6 +23,8 @@ public class MoveAction : BaseAction
     }
     private void Update()
     {
+        if (!isActive) { return; }
+
         if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
         {
             animator.SetBool("Walking", true);
@@ -33,11 +35,15 @@ public class MoveAction : BaseAction
         else
         {
             animator.SetBool("Walking", false);
+            isActive = false;
+            OnActionComplete(); // Null
         }
     }
-    public void Move(GridPosition gridPosition)
+    public void Move(GridPosition gridPosition, Action OnActionComplete)
     {
+        this.OnActionComplete = OnActionComplete;
         targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+        isActive = true;
     }
     public bool IsValidActionGridPosition(GridPosition gridPosition)
     {

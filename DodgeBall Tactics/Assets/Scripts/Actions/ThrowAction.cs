@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ThrowAction : BaseAction
 {
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
-    protected override void Awake()
+    // Delegate to store reference to a function and call it when needed
+    public void Throw(Action OnActionComplete)
     {
-        base.Awake();
-        animator = GetComponent<Animator>();
-    }
-    public void Throw()
-    {
+        this.OnActionComplete = OnActionComplete;
+        isActive = true;
         animator.SetBool("Throw", true);
+    }
+    public void EndThrowAnimation()
+    {
+        OnActionComplete();
     }
 }
