@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    [SerializeField] private Animator animator;
     [SerializeField] private float moveSpeed = 3f;
-    private Vector3 targetPosition;
+    [SerializeField] private float rotateSpeed = 10f;
 
+    private Vector3 targetPosition;
     float stoppingDistance = 0.1f;
 
     private void Start()
@@ -19,18 +21,21 @@ public class Unit : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
         {
+            animator.SetBool("Walking", true);
             Vector3 moveDiection = (targetPosition - transform.position).normalized;
             transform.position += moveDiection * Time.deltaTime * moveSpeed;
+            transform.forward = Vector3.Lerp(transform.forward, moveDiection, Time.deltaTime * rotateSpeed);
+        }
+        else
+        {
+            animator.SetBool("Walking", false);
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            Move(MouseWorld.GetPosition());
-        }
+        
 
     }
 
-    private void Move(Vector3 targetPosition)
+    public  void Move(Vector3 targetPosition)
     {
         this.targetPosition = targetPosition;
     }
