@@ -18,7 +18,7 @@ public class MoveAction : BaseAction
 
     protected override void Awake()
     {
-        base.Awake();   // To also run parent Awake and not only override completely
+        base.Awake();
         targetPosition = transform.position;
     }
     private void Update()
@@ -36,7 +36,7 @@ public class MoveAction : BaseAction
         {
             animator.SetBool("Walking", false);
             isActive = false;
-            OnActionComplete(); // Null
+            OnActionComplete();
         }
     }
     public override void TakeAction(GridPosition gridPosition, Action OnActionComplete)

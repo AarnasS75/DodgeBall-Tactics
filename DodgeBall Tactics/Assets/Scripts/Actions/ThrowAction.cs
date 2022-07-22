@@ -7,7 +7,6 @@ public class ThrowAction : BaseAction
 {
     [SerializeField] private Animator animator;
 
-    // Delegate to store reference to a function and call it when needed
     public override void TakeAction(GridPosition gridPosition, Action OnActionComplete)
     {
         this.OnActionComplete = OnActionComplete;
@@ -22,10 +21,11 @@ public class ThrowAction : BaseAction
     {
         return "Throw";
     }
+    // Gets tile position, which can be pressed to perform action. At the moment 
+    // it only calls Throw action, if player presses same tile as the unit is standing on.
     public override List<GridPosition> GetValidActionGridPositionList()
     {
-        List<GridPosition> validGridPositions = new();
-        GridPosition unitGridposition = unit.GetGridPosition();
+        GridPosition unitGridposition = unit.GetGridPosition();        // TODO: Change to select enemy tile. Also maybe add distance.
 
         return new List<GridPosition>
         {

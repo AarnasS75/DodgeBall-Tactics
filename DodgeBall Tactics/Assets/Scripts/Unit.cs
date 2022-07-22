@@ -42,11 +42,12 @@ public class Unit : MonoBehaviour
     {
         return throwAction;
     }
+    // Get grid tile position, on which the unit is standing
     public GridPosition GetGridPosition()
     {
         return currentGridPosition;
     }
-
+    // Get unit all possible actions array
     public BaseAction[] GetBaseActionArray()
     {
         return baseActionArray;

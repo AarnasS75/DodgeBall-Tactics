@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UnitActionSystem : MonoBehaviour
 {
@@ -34,18 +35,23 @@ public class UnitActionSystem : MonoBehaviour
     }
     void Update()
     {
-        if(isBusy) return;
+        if(isBusy) return;  // If action is not finished, return
 
-        if (TryHandleUnitSelection()) return;
+        if (EventSystem.current.IsPointerOverGameObject())  // If mouse is on UI, don't call actions at the same time
+        {
+            return;
+        }
+
+        if (TryHandleUnitSelection()) return;   // Unit selection
 
         HandleSelectedAction();
     }
     private void HandleSelectedAction()
     {
-        GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
-
         if (Input.GetMouseButtonDown(0))
         {
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+
             if (selectedAction.IsValidActionGridPosition(mouseGridPosition))
             {
                 SetBusy();
@@ -81,8 +87,12 @@ public class UnitActionSystem : MonoBehaviour
     private void SetSelectedUnit(Unit unit)
     {
         selectedUnit = unit;
-        SetSelectedAction(unit.GetMoveAction());
+        SetSelectedAction(unit.GetMoveAction());           // Set default action to perform, when player is selected.
         OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
+    }
+    public BaseAction GetSelectedAction()
+    {
+        return selectedAction;
     }
     public void SetSelectedAction(BaseAction baseAction)
     {
