@@ -11,7 +11,7 @@ public class ThrowAction : BaseAction
     {
         this.OnActionComplete = OnActionComplete;
         isActive = true;
-        animator.SetBool("Throw", true);
+        animator.SetTrigger("Throw_T");
     }
     public void EndThrowAnimation()
     {
