@@ -10,7 +10,6 @@ public abstract class BaseAction : MonoBehaviour
     protected Action OnActionComplete;
 
     // virtual to let children override
-
     protected virtual void Awake()
     {
         unit = GetComponent<Unit>();

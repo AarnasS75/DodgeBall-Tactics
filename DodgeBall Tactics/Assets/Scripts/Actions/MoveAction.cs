@@ -12,7 +12,7 @@ public class MoveAction : BaseAction
 
     [SerializeField] private int maxMoveDistance = 4;
 
-    float stoppingDistance = 0.1f;
+    private float stoppingDistance = 0.1f;
 
     private Vector3 targetPosition;
 
@@ -54,7 +54,7 @@ public class MoveAction : BaseAction
     }
     public List<GridPosition> GetValidActionGridPositionList()
     {
-        List<GridPosition> validGridPositions = new List<GridPosition>();
+        List<GridPosition> validGridPositions = new();
 
         GridPosition unitGridPosition = unit.GetGridPosition();
 
@@ -62,7 +62,7 @@ public class MoveAction : BaseAction
         {
             for (int z = -maxMoveDistance; z <= maxMoveDistance; z++)
             {
-                GridPosition offsetGridPosition = new GridPosition(x, z);
+                GridPosition offsetGridPosition = new(x, z);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
                 if(!LevelGrid.Instance.IsValidGridPosition(testGridPosition))

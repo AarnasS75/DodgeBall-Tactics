@@ -8,11 +8,14 @@ public class Unit : MonoBehaviour
     private GridPosition currentGridPosition;
     private MoveAction moveAction;
     private ThrowAction throwAction;
+    private BaseAction[] baseActionArray;
+
 
     private void Awake()
     {
         moveAction = GetComponent<MoveAction>();
         throwAction = GetComponent<ThrowAction>();
+        baseActionArray = GetComponents<BaseAction>();
     }
     private void Start()
     {
@@ -42,5 +45,10 @@ public class Unit : MonoBehaviour
     public GridPosition GetGridPosition()
     {
         return currentGridPosition;
+    }
+
+    public BaseAction[] GetBaseActionArray()
+    {
+        return baseActionArray;
     }
 }

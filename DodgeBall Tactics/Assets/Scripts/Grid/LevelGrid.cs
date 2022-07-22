@@ -16,7 +16,8 @@ public class LevelGrid : MonoBehaviour
             Instance = this;
         Destroy(gameObject);
 
-        gridSystem = new GridSystem(10, 10, 2f);
+        // Set grid size
+        gridSystem = new GridSystem(10, 4, 2f);
         gridSystem.CreateDebugObjects(gridDebugObject);
     }
 
