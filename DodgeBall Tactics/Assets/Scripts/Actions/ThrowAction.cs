@@ -8,7 +8,7 @@ public class ThrowAction : BaseAction
     [SerializeField] private Animator animator;
 
     // Delegate to store reference to a function and call it when needed
-    public void Throw(Action OnActionComplete)
+    public override void TakeAction(GridPosition gridPosition, Action OnActionComplete)
     {
         this.OnActionComplete = OnActionComplete;
         isActive = true;
@@ -21,5 +21,15 @@ public class ThrowAction : BaseAction
     public override string GetActionName()
     {
         return "Throw";
+    }
+    public override List<GridPosition> GetValidActionGridPositionList()
+    {
+        List<GridPosition> validGridPositions = new();
+        GridPosition unitGridposition = unit.GetGridPosition();
+
+        return new List<GridPosition>
+        {
+            unitGridposition
+        };
     }
 }

@@ -16,4 +16,14 @@ public abstract class BaseAction : MonoBehaviour
     }
 
     public abstract string GetActionName();
+    public abstract void TakeAction(GridPosition gridPosition, Action onActionComplete);
+
+    public virtual bool IsValidActionGridPosition(GridPosition gridPosition)
+    {
+        // Get all valid grid positions, where unit can move and on mosue click return if it is possible to move there
+
+        List<GridPosition> validGridPositionList = GetValidActionGridPositionList();
+        return validGridPositionList.Contains(gridPosition);
+    }
+    public abstract List<GridPosition> GetValidActionGridPositionList();
 }

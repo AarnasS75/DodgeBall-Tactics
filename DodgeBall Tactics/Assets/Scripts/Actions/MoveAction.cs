@@ -39,20 +39,13 @@ public class MoveAction : BaseAction
             OnActionComplete(); // Null
         }
     }
-    public void Move(GridPosition gridPosition, Action OnActionComplete)
+    public override void TakeAction(GridPosition gridPosition, Action OnActionComplete)
     {
         this.OnActionComplete = OnActionComplete;
         targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
         isActive = true;
     }
-    public bool IsValidActionGridPosition(GridPosition gridPosition)
-    {
-        // Get all valid grid positions, where unit can move and on mosue click return if it is possible to move there
-
-        List<GridPosition> validGridPositionList = GetValidActionGridPositionList();
-        return validGridPositionList.Contains(gridPosition);
-    }
-    public List<GridPosition> GetValidActionGridPositionList()
+    public override List<GridPosition> GetValidActionGridPositionList()
     {
         List<GridPosition> validGridPositions = new();
 
