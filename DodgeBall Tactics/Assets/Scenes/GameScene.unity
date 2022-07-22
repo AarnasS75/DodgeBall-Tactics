@@ -1123,10 +1123,10 @@ RectTransform:
   m_Father: {fileID: 474112539}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 81.5}
+  m_SizeDelta: {x: 1280, y: 720}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1525827866
 MonoBehaviour:
@@ -1149,7 +1149,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 80, y: 80}
-  m_Spacing: {x: 0, y: 0}
+  m_Spacing: {x: 40, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
 --- !u!1 &1776995129
@@ -1505,5 +1505,6 @@ PrefabInstance:
       propertyPath: maxMoveDistance
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8241182650248803487, guid: 141c2094a0bb7ee4887926d68902b0f9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 141c2094a0bb7ee4887926d68902b0f9, type: 3}

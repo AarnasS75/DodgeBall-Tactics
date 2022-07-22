@@ -18,4 +18,8 @@ public class ThrowAction : BaseAction
     {
         OnActionComplete();
     }
+    public override string GetActionName()
+    {
+        return "Throw";
+    }
 }
