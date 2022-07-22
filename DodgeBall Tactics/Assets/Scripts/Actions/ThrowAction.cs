@@ -32,4 +32,8 @@ public class ThrowAction : BaseAction
             unitGridposition
         };
     }
+    public override int GetActionPointsCost()
+    {
+        return 2;
+    }
 }

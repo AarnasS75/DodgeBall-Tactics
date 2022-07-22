@@ -10,6 +10,7 @@ public class Unit : MonoBehaviour
     private ThrowAction throwAction;
     private BaseAction[] baseActionArray;
 
+    private int actionPoints = 2;
 
     private void Awake()
     {
@@ -52,4 +53,24 @@ public class Unit : MonoBehaviour
     {
         return baseActionArray;
     }
+
+    public bool TrySpendActionPointsForAction(BaseAction baseAction)
+    {
+        if (CanSpendActionPoints(baseAction))
+        {
+            SpendActionPoint(baseAction.GetActionPointsCost());
+            return true;
+        }
+        else { return false; }
+    }
+
+    public bool CanSpendActionPoints(BaseAction baseAction)
+    {
+        return actionPoints >= baseAction.GetActionPointsCost();
+    }
+    private void SpendActionPoint(int ammount)
+    {
+        actionPoints -= ammount;
+    }
+    public int GetActionPoints() => actionPoints;
 }
