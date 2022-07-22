@@ -12,6 +12,7 @@ public class UnitActionSystem : MonoBehaviour
     [SerializeField] private LayerMask unitMask;
 
     public event EventHandler OnSelectedUnitChanged;
+    public event EventHandler OnSelectedActionChanged;
 
     private BaseAction selectedAction;
 
@@ -77,6 +78,10 @@ public class UnitActionSystem : MonoBehaviour
             {
                 if (hit.transform.TryGetComponent(out Unit unit))
                 {
+                    if(unit == selectedUnit)
+                    {
+                        return false;
+                    }
                     SetSelectedUnit(unit);
                     return true;
                 }
@@ -97,6 +102,8 @@ public class UnitActionSystem : MonoBehaviour
     public void SetSelectedAction(BaseAction baseAction)
     {
         selectedAction = baseAction;
+
+        OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
     }
     public Unit GetSelectedUnit()
     {

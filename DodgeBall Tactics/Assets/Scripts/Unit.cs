@@ -47,7 +47,7 @@ public class Unit : MonoBehaviour
     {
         return currentGridPosition;
     }
-    // Get unit all possible actions array
+    // Get units all possible actions array
     public BaseAction[] GetBaseActionArray()
     {
         return baseActionArray;
