@@ -12,6 +12,8 @@ public class ThrowAction : BaseAction
         Cooloff
     }
 
+    [SerializeField] private int damageAmmount = 30;
+
     public event EventHandler OnThrowStart;
 
     private State state;
@@ -84,7 +86,7 @@ public class ThrowAction : BaseAction
     private void ThrowBall()
     {
         OnThrowStart?.Invoke(this, EventArgs.Empty);
-        targetUnit.Damage();
+        targetUnit.Damage(damageAmmount);
     }
 
     public override void TakeAction(GridPosition gridPosition, Action OnActionComplete)

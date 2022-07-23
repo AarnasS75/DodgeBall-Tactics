@@ -157,6 +157,7 @@ GameObject:
   - component: {fileID: 8252367469918215798}
   - component: {fileID: 8241182650248803487}
   - component: {fileID: -4292875988297585405}
+  - component: {fileID: 6206675579400548129}
   m_Layer: 7
   m_Name: Unit
   m_TagString: Untagged
@@ -254,6 +255,18 @@ MonoBehaviour:
   ballPrefabTransform: {fileID: 851243989783565825, guid: e2f093bf38f062e47a59672b594524f4,
     type: 3}
   throwPointTransform: {fileID: 800399948016993308}
+--- !u!114 &6206675579400548129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6035963763238112832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b7e68379557f9459f8ee14a62ffaba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6035963763164063048
 PrefabInstance:
   m_ObjectHideFlags: 0

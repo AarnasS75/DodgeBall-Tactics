@@ -25,11 +25,13 @@ public class MoveAction : BaseAction
     {
         if (!isActive) { return; }
 
-        Vector3 moveDiection = (targetPosition - transform.position).normalized;
+        
 
         if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
         {
+            Vector3 moveDiection = (targetPosition - transform.position).normalized;
             transform.position += moveDiection * Time.deltaTime * moveSpeed;
+            transform.forward = Vector3.Lerp(transform.forward, moveDiection, Time.deltaTime * rotateSpeed);
         }
         else
         {
@@ -37,7 +39,7 @@ public class MoveAction : BaseAction
             OnActionComplete();
         }
 
-        transform.forward = Vector3.Lerp(transform.forward, moveDiection, Time.deltaTime * rotateSpeed);
+        
     }
     public override void TakeAction(GridPosition gridPosition, Action OnActionComplete)
     {

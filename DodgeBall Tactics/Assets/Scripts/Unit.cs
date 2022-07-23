@@ -12,6 +12,7 @@ public class Unit : MonoBehaviour
     public static event EventHandler OnAnyActionPointsChanged;
 
     private GridPosition currentGridPosition;
+    private HealthSystem healthSystem;
     private MoveAction moveAction;
     private ThrowAction throwAction;
     private BaseAction[] baseActionArray;
@@ -22,6 +23,7 @@ public class Unit : MonoBehaviour
     {
         actionPoints = maxActionPoints;
 
+        healthSystem = GetComponent<HealthSystem>();
         moveAction = GetComponent<MoveAction>();
         throwAction = GetComponent<ThrowAction>();
         baseActionArray = GetComponents<BaseAction>();
@@ -31,6 +33,7 @@ public class Unit : MonoBehaviour
         currentGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(currentGridPosition, this);
 
+        healthSystem.OnDead += healthSystem_OnDead;
         TurnSystem.Instance.OnTurnChangedEvent += TurnSystem_OnTurnChangedEvent;
     }
 
@@ -94,17 +97,23 @@ public class Unit : MonoBehaviour
             actionPoints = maxActionPoints;
             OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
         }
-        
 
-      
+
+
     }
+    private void healthSystem_OnDead(object sender, EventArgs e)
+    {
+        LevelGrid.Instance.RemoveUnitAtGridPosition(currentGridPosition, this);
+        Destroy(gameObject);
+    }
+
     public int GetActionPoints() => actionPoints;
 
     public bool IsEnemy() => isEnemy;
 
-    public void Damage()
+    public void Damage(int damageAmmount)
     {
-        print(transform + " Deal damage: -20");
+        healthSystem.TakeDamage(damageAmmount);
     }
     public Vector3 GetWorldPosition() => transform.position;
 
