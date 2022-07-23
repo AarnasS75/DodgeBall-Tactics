@@ -20,8 +20,7 @@ public class Ball : MonoBehaviour
     private void Start()
     {
         throwDirection = GetComponentInParent<ThrowAction>().GetThrowDirection();
-        Debug.DrawRay(transform.position, throwDirection * throwForce, Color.green, 9999);
-       //rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
+        rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
     }
     private void Update()
     {

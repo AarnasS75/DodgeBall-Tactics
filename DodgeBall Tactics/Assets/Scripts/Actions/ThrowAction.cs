@@ -49,8 +49,7 @@ public class ThrowAction : BaseAction
             case State.Cooloff:
                 break;
         }
-
-        if(stateTimer <= 0)
+        if (stateTimer <= 0)
         {
             NextState();
         }
