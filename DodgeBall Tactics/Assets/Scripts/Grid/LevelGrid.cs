@@ -13,8 +13,13 @@ public class LevelGrid : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
-        Destroy(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 
         // Set grid size
         gridSystem = new GridSystem(9, 4, 2f);
@@ -55,5 +60,10 @@ public class LevelGrid : MonoBehaviour
     {
         GridObject gridObj = gridSystem.GetGridObject(gridPosition);
         return gridObj.HasAnyUnit();
+    }
+    public Unit GetUnitAtGridposition(GridPosition gridPosition)
+    {
+        GridObject gridObj = gridSystem.GetGridObject(gridPosition);
+        return gridObj.GetUnit();
     }
 }

@@ -5,15 +5,23 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    [SerializeField] private bool isEnemy;
+
+    [SerializeField] private int maxActionPoints = 4;   // Can change to const
+
+    public static event EventHandler OnAnyActionPointsChanged;
+
     private GridPosition currentGridPosition;
     private MoveAction moveAction;
     private ThrowAction throwAction;
     private BaseAction[] baseActionArray;
 
-    private int actionPoints = 2;
+    private int actionPoints;
 
     private void Awake()
     {
+        actionPoints = maxActionPoints;
+
         moveAction = GetComponent<MoveAction>();
         throwAction = GetComponent<ThrowAction>();
         baseActionArray = GetComponents<BaseAction>();
@@ -22,6 +30,8 @@ public class Unit : MonoBehaviour
     {
         currentGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(currentGridPosition, this);
+
+        TurnSystem.Instance.OnTurnChangedEvent += TurnSystem_OnTurnChangedEvent;
     }
 
     private void Update()
@@ -32,6 +42,7 @@ public class Unit : MonoBehaviour
         {
             // Unit changed grid position
             LevelGrid.Instance.UnitMovedGridPosition(this, currentGridPosition, newGridPosition);
+           
             currentGridPosition = newGridPosition;
         }
     }
@@ -71,6 +82,30 @@ public class Unit : MonoBehaviour
     private void SpendActionPoint(int ammount)
     {
         actionPoints -= ammount;
+
+        OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void TurnSystem_OnTurnChangedEvent(object sender, EventArgs e)
+    {
+        if ((IsEnemy() && TurnSystem.Instance.IsPlayerTurn()) ||
+            (!IsEnemy() && TurnSystem.Instance.IsPlayerTurn()))
+        {
+            actionPoints = maxActionPoints;
+            OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+        }
+        
+
+      
     }
     public int GetActionPoints() => actionPoints;
+
+    public bool IsEnemy() => isEnemy;
+
+    public void Damage()
+    {
+        print(transform + " Deal damage: -20");
+    }
+    public Vector3 GetWorldPosition() => transform.position;
+
 }

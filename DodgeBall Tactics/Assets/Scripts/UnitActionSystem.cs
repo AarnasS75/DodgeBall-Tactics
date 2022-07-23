@@ -38,14 +38,25 @@ public class UnitActionSystem : MonoBehaviour
     }
     void Update()
     {
-        if(isBusy) return;  // If action is not finished, return
+        if (isBusy)
+        {
+            return; // If action is not finished, return
+        }
+
+        if (!TurnSystem.Instance.IsPlayerTurn())
+        {
+            return;
+        }
 
         if (EventSystem.current.IsPointerOverGameObject())  // If mouse is on UI, don't call actions at the same time
         {
             return;
         }
 
-        if (TryHandleUnitSelection()) return;   // Unit selection
+        if (TryHandleUnitSelection())
+        {
+            return; 
+        }
 
         HandleSelectedAction();
     }
@@ -53,7 +64,7 @@ public class UnitActionSystem : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.Instance.GetPosition());
 
             if (selectedAction.IsValidActionGridPosition(mouseGridPosition))
             {
@@ -88,6 +99,13 @@ public class UnitActionSystem : MonoBehaviour
                 {
                     if(unit == selectedUnit)
                     {
+                        // Unit is already selected
+                        return false;
+                    }
+
+                    if (unit.IsEnemy())
+                    {
+                        // Clicked on enemy
                         return false;
                     }
                     SetSelectedUnit(unit);
