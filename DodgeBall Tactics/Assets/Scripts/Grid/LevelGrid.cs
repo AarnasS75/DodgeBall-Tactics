@@ -51,7 +51,7 @@ public class LevelGrid : MonoBehaviour
     public int GetGridWidth() => gridSystem.GetWidth();
     public int GetGridHeight() => gridSystem.GetHeight();
 
-    public bool IsValidGridPosition(GridPosition gridPosition) => gridSystem.IsValidGridPosition(gridPosition);
+    public bool IsValidGridPosition(GridPosition gridPosition, Unit unit) => gridSystem.IsValidGridPosition(gridPosition, unit);
 
     public void UnitMovedGridPosition(Unit unit, GridPosition fromGridPosition, GridPosition toGridPosition)
     {

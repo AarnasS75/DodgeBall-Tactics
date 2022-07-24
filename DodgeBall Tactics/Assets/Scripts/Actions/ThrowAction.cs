@@ -128,7 +128,7 @@ public class ThrowAction : BaseAction
                 GridPosition offsetGridPosition = new(x, z);
                 GridPosition testGridPosition = gridPosition + offsetGridPosition;
 
-                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition, unit))
                 {
                     // If tile position is outside of declared boundaries
                     continue;

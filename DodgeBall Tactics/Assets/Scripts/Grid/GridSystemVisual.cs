@@ -26,6 +26,8 @@ public class GridSystemVisual : MonoBehaviour
 
     private GridSystemVisualSingle[,] gridSystemVisualSingleArray;
 
+    Unit selectedUnit;
+
     private void Awake()
     {
         if (Instance == null)
@@ -84,7 +86,7 @@ public class GridSystemVisual : MonoBehaviour
     {
         HideAllGridPositions();
 
-        Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
+        selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
         BaseAction selectedAction = UnitActionSystem.Instance.GetSelectedAction();
 
         VisualType visualType = VisualType.White;
@@ -112,7 +114,7 @@ public class GridSystemVisual : MonoBehaviour
             {
                 GridPosition testGridPosition = gridPosition + new GridPosition(x, z);
 
-                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition, selectedUnit))
                 {
                     // If tile position is outside of declared boundaries
                     continue;

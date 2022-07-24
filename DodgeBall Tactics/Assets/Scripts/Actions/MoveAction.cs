@@ -60,7 +60,7 @@ public class MoveAction : BaseAction
                 GridPosition offsetGridPosition = new(x, z);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
-                if(!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
+                if(!LevelGrid.Instance.IsValidGridPosition(testGridPosition, unit))
                 {
                     // If tile position is outside of declared boundaries
                     continue;

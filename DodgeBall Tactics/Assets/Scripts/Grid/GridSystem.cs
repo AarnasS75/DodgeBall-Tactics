@@ -5,22 +5,22 @@ using UnityEngine;
 public class GridSystem
 {
     private int width;
-    private int height;
+    private int length;
     private float cellSize;
 
     private GridObject[,] gridObjects;
 
-    public GridSystem(int height, int width, float cellSize)
+    public GridSystem(int length, int width, float cellSize)
     {
-        this.height = height;
+        this.length = length;
         this.width = width;
         this.cellSize = cellSize;
 
-        gridObjects = new GridObject[width, height];
+        gridObjects = new GridObject[width, length];
 
         for (int x = 0; x < width; x++)
         {
-            for (int z = 0; z < height; z++)
+            for (int z = 0; z < length; z++)
             {
                 gridObjects[x,z] = new GridObject(new GridPosition(x, z), this);
             }
@@ -40,7 +40,7 @@ public class GridSystem
     {
         for (int x = 0; x < width; x++)
         {
-            for (int z = 0; z < height; z++)
+            for (int z = 0; z < length; z++)
             {
                 GridPosition gridPosition = new GridPosition(x,z);
                 Transform debugObject = GameObject.Instantiate(debugPrefab, GetWorldPosition(gridPosition), Quaternion.identity);
@@ -53,13 +53,25 @@ public class GridSystem
     {
         return gridObjects[gridPosition.x, gridPosition.z];
     }
-    public bool IsValidGridPosition(GridPosition gridPosition)
+    public bool IsValidGridPosition(GridPosition gridPosition, Unit unit)
     {
-        return gridPosition.x >= 0 && 
-               gridPosition.z >= 0 && 
-               gridPosition.x < width && 
-               gridPosition.z < height;
+        if (unit.transform.position.z <= 6 && unit.transform.position.z >= 0)
+        {
+            // Unit is on right side
+            return gridPosition.x >= 0 &&
+               gridPosition.z >= 0 &&
+               gridPosition.x < width &&
+               gridPosition.z < length / 2;
+        }
+        else
+        {
+            // Unit is on left side
+            return gridPosition.x >= 0 &&
+               gridPosition.z >= length / 2 &&
+               gridPosition.x < width &&
+               gridPosition.z < length;
+        }
     }
     public int GetWidth() => width;
-    public int GetHeight() => height;
+    public int GetHeight() => length;
 }
