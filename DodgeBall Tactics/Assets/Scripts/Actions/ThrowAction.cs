@@ -19,7 +19,7 @@ public class ThrowAction : BaseAction
     private State state;
     [SerializeField] private Animator animator;
     private Unit targetUnit;
-    private int maxThrowDistance = 4;
+    [SerializeField] private int maxThrowDistance = 4;
     private bool canThrowBall;
 
     Vector3 aimDir;
@@ -109,24 +109,29 @@ public class ThrowAction : BaseAction
     {
         return "Throw";
     }
-    // Gets tile position, which can be pressed to perform action. At the moment 
-    // it only calls Throw action, if player presses same tile as the unit is standing on.
     public override List<GridPosition> GetValidActionGridPositionList()
     {
-        List<GridPosition> validGridPositions = new();
-
         GridPosition unitGridPosition = unit.GetGridPosition();
+
+        return GetValidActionGridPositionList(unitGridPosition);
+    }
+    // Gets tile position, which can be pressed to perform action. At the moment 
+    // it only calls Throw action, if player presses same tile as the unit is standing on.
+    public List<GridPosition> GetValidActionGridPositionList(GridPosition gridPosition)
+    {
+        List<GridPosition> validGridPositions = new();
 
         for (int x = -maxThrowDistance; x <= maxThrowDistance; x++)
         {
             for (int z = -maxThrowDistance; z <= maxThrowDistance; z++)
             {
                 GridPosition offsetGridPosition = new(x, z);
-                GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
+                GridPosition testGridPosition = gridPosition + offsetGridPosition;
 
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
                 {
                     // If tile position is outside of declared boundaries
+                    print("tile position is outside of declared boundaries");
                     continue;
                 }
 
@@ -139,6 +144,7 @@ public class ThrowAction : BaseAction
                 if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition))
                 {
                     // Grid position is empty, no Unit
+                    print("Grid position is empty, no Unit");
                     continue;
                 }
                 Unit targetUnit = LevelGrid.Instance.GetUnitAtGridposition(testGridPosition);
@@ -146,6 +152,7 @@ public class ThrowAction : BaseAction
                 if (targetUnit.IsEnemy() == unit.IsEnemy())
                 {
                     // Both units are on the same team
+                    print("Grid position is empty, no Unit");
                     continue;
                 }
                 validGridPositions.Add(testGridPosition);
@@ -163,4 +170,17 @@ public class ThrowAction : BaseAction
     }
     public Unit GetTargetUnit() => targetUnit;
     public int GetMAxThrowDistnace() => maxThrowDistance;
+
+    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
+    {
+        return new EnemyAIAction
+        {
+            gridPosition = gridPosition,
+            actionValue = 100
+        };
+    }
+    public int GetTargetCountAtPosition(GridPosition gridPosition)
+    {
+       return GetValidActionGridPositionList(gridPosition).Count;
+    }
 }

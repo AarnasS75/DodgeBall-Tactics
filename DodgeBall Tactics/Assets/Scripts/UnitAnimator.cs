@@ -26,7 +26,7 @@ public class UnitAnimator : MonoBehaviour
 
     private void ThrowAction_OnThrowStart(object sender, EventArgs e)
     {
-        animator.SetTrigger("Throw");
+        animator.SetTrigger("Throw_T");
         Instantiate(ballPrefabTransform, throwPointTransform.position, Quaternion.identity, transform);
     }
 

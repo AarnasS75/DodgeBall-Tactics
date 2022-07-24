@@ -43,10 +43,12 @@ public class EnemyAI : MonoBehaviour
                 {
                     if (TryTakeEnemyAIAction(SetStateTakingTurn))
                     {
+                        print("Taking action");
                         state = State.Busy;
                     }
                     else
                     {
+                        print("Enemies are out of actions");
                         // enemies are out of actions
                         TurnSystem.Instance.NextTurn();
                     }
@@ -79,27 +81,53 @@ public class EnemyAI : MonoBehaviour
         {
             if(TryTakeEnemyAIAction(enemyUnit, onEnemyAIaCtionComplete))
             {
+                print("Enemy throw action");
                 return true;
             }
+            print("Enemy throw action not available");
         }
         return false;
     }
     private bool TryTakeEnemyAIAction(Unit enemyUnit, Action onEnemyAIactionComplete)
     {
-        ThrowAction throwAction = enemyUnit.GetThrowAction();
+        EnemyAIAction bestEnemyAIAction = null;
+        BaseAction bestBaseAction = null;
 
-        GridPosition actionGridPosition = enemyUnit.GetGridPosition();
+        foreach (var baseAction in enemyUnit.GetBaseActionArray())
+        {
+            if( !enemyUnit.CanSpendActionPoints(baseAction))
+            {
+                // Enemy cannot afford this action
+                continue;
+            }
+            else
+            {
+                if(bestEnemyAIAction == null)
+                {
+                    bestEnemyAIAction = baseAction.GetBestEnemyAIAction();
+                    bestBaseAction = baseAction;
+                }
+                else
+                {
+                    EnemyAIAction testEnemyAIAction = baseAction.GetBestEnemyAIAction();
 
-        if (!throwAction.IsValidActionGridPosition(actionGridPosition))
+                    if (testEnemyAIAction != null && testEnemyAIAction.actionValue > bestEnemyAIAction.actionValue)
+                    {
+                        bestEnemyAIAction = testEnemyAIAction;
+                        bestBaseAction = baseAction;
+                    }
+                }
+            }
+        }
+
+        if(bestEnemyAIAction != null && enemyUnit.TrySpendActionPointsForAction(bestBaseAction))
+        {
+            bestBaseAction.TakeAction(bestEnemyAIAction.gridPosition, onEnemyAIactionComplete);
+            return true;
+        }
+        else
         {
             return false;
         }
-        if (!enemyUnit.TrySpendActionPointsForAction(throwAction))
-        {
-            return false;
-        }
-        print("Enemy Throw Action");
-        throwAction.TakeAction(actionGridPosition, onEnemyAIactionComplete);
-        return true;
     }
 }

@@ -33,10 +33,11 @@ public class Unit : MonoBehaviour
         currentGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         LevelGrid.Instance.AddUnitAtGridPosition(currentGridPosition, this);
 
-        healthSystem.OnDead += healthSystem_OnDead;
         TurnSystem.Instance.OnTurnChangedEvent += TurnSystem_OnTurnChangedEvent;
 
+        healthSystem.OnDead += healthSystem_OnDead; 
         OnAnyUnitSpawned?.Invoke(this, EventArgs.Empty);
+
     }
 
     private void Update()
@@ -78,7 +79,10 @@ public class Unit : MonoBehaviour
             SpendActionPoint(baseAction.GetActionPointsCost());
             return true;
         }
-        else { return false; }
+        else 
+        { 
+            return false; 
+        }
     }
 
     public bool CanSpendActionPoints(BaseAction baseAction)
@@ -100,13 +104,11 @@ public class Unit : MonoBehaviour
             actionPoints = maxActionPoints;
             OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
         }
-
-
-
     }
     private void healthSystem_OnDead(object sender, EventArgs e)
     {
         LevelGrid.Instance.RemoveUnitAtGridPosition(currentGridPosition, this);
+       
         Destroy(gameObject);
 
         OnAnyUnitDead?.Invoke(this, EventArgs.Empty);

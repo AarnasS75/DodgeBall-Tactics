@@ -7,9 +7,9 @@ public class UnitManager : MonoBehaviour
 {
     public static UnitManager Instance { get; private set; }
 
-    private List<Unit> unitList;
-    private List<Unit> friendlyUnitList;
-    private List<Unit> enemyUnitList;
+    public List<Unit> unitList;
+    public List<Unit> friendlyUnitList;
+    public List<Unit> enemyUnitList;
 
     private void Awake()
     {
@@ -33,23 +33,7 @@ public class UnitManager : MonoBehaviour
     }
     private void Unit_OnAnyUnitSpawned(object sender, EventArgs e)
     {
-        Unit unit = (Unit)sender;
-
-        unitList.Remove(unit);
-
-        if (unit.IsEnemy())
-        {
-            enemyUnitList.Remove(unit);
-        }
-        else
-        {
-            friendlyUnitList.Remove(unit);
-        }
-    }
-
-    private void Unit_OnAnyUnitDead(object sender, EventArgs e)
-    {
-        Unit unit = (Unit)sender;
+        Unit unit = sender as Unit;
 
         unitList.Add(unit);
 
@@ -60,6 +44,22 @@ public class UnitManager : MonoBehaviour
         else
         {
             friendlyUnitList.Add(unit);
+        }
+    }
+
+    private void Unit_OnAnyUnitDead(object sender, EventArgs e)
+    {
+        Unit unit = sender as Unit;
+
+        unitList.Remove(unit);
+
+        if (unit.IsEnemy())
+        {
+            enemyUnitList.Remove(unit);
+        }
+        else
+        {
+            friendlyUnitList.Remove(unit);
         }
     }
     public List<Unit> GetUnitList() => unitList;
