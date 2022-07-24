@@ -25,8 +25,6 @@ public class MoveAction : BaseAction
     {
         if (!isActive) { return; }
 
-        
-
         if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
         {
             Vector3 moveDiection = (targetPosition - transform.position).normalized;
