@@ -53,23 +53,33 @@ public class GridSystem
     {
         return gridObjects[gridPosition.x, gridPosition.z];
     }
-    public bool IsValidGridPosition(GridPosition gridPosition, Unit unit)
+    public bool IsValidGridPosition(GridPosition gridPosition, Unit unit, bool attacking = false)
     {
-        if (unit.transform.position.z <= 6 && unit.transform.position.z >= 0)
+        if (!attacking)
         {
-            // Unit is on right side
-            return gridPosition.x >= 0 &&
-               gridPosition.z >= 0 &&
-               gridPosition.x < width &&
-               gridPosition.z < length / 2;
+            if (unit.transform.position.z <= 6 && unit.transform.position.z >= 0)
+            {
+                // Unit is on right side
+                return gridPosition.x >= 0 &&
+                   gridPosition.z >= 0 &&
+                   gridPosition.x < width &&
+                   gridPosition.z < length / 2;
+            }
+            else
+            {
+                // Unit is on left side
+                return gridPosition.x >= 0 &&
+                   gridPosition.z >= length / 2 &&
+                   gridPosition.x < width &&
+                   gridPosition.z < length;
+            }
         }
         else
         {
-            // Unit is on left side
             return gridPosition.x >= 0 &&
-               gridPosition.z >= length / 2 &&
-               gridPosition.x < width &&
-               gridPosition.z < length;
+                   gridPosition.z >= 0 &&
+                   gridPosition.x < width &&
+                   gridPosition.z < length;
         }
     }
     public int GetWidth() => width;

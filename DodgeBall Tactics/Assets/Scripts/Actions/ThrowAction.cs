@@ -109,15 +109,25 @@ public class ThrowAction : BaseAction
     {
         return "Throw";
     }
+
+
+
+
+
+
+
+
+
     public override List<GridPosition> GetValidActionGridPositionList()
     {
-        GridPosition unitGridPosition = unit.GetGridPosition();
+        GridPosition unitGridPosition = unit.GetGridPosition();     // Getting units current position
 
-        return GetValidActionGridPositionList(unitGridPosition);
+        return GetValidActionGridPositionList(unitGridPosition);    // Checking if units position + action range are compatible
     }
-    // Gets tile position, which can be pressed to perform action. At the moment 
-    // it only calls Throw action, if player presses same tile as the unit is standing on.
-    public List<GridPosition> GetValidActionGridPositionList(GridPosition gridPosition)
+
+
+
+    public List<GridPosition> GetValidActionGridPositionList(GridPosition unitPosition)
     {
         List<GridPosition> validGridPositions = new();
 
@@ -126,9 +136,9 @@ public class ThrowAction : BaseAction
             for (int z = -maxThrowDistance; z <= maxThrowDistance; z++)
             {
                 GridPosition offsetGridPosition = new(x, z);
-                GridPosition testGridPosition = gridPosition + offsetGridPosition;
+                GridPosition testGridPosition = unitPosition + offsetGridPosition;  // Get throw tile range
 
-                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition, unit))
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition, unit, true))
                 {
                     // If tile position is outside of declared boundaries
                     continue;
@@ -157,6 +167,21 @@ public class ThrowAction : BaseAction
         }
         return validGridPositions;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public override int GetActionPointsCost()
     {
         return 2;
