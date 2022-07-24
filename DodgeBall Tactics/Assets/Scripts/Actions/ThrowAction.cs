@@ -91,15 +91,14 @@ public class ThrowAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action OnActionComplete)
     {
-        ActionStart(OnActionComplete);
         targetUnit = LevelGrid.Instance.GetUnitAtGridposition(gridPosition);
         canThrowBall = true;
        
-
         float timeAimingState = 1f;
         stateTimer = timeAimingState;
         state = State.Aiming;
 
+        ActionStart(OnActionComplete);
     }
     public void EndThrowAnimation()
     {
@@ -162,4 +161,6 @@ public class ThrowAction : BaseAction
     {
         return aimDir;
     }
+    public Unit GetTargetUnit() => targetUnit;
+    public int GetMAxThrowDistnace() => maxThrowDistance;
 }
