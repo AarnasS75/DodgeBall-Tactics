@@ -43,7 +43,6 @@ public class EnemyAI : MonoBehaviour
                 {
                     if (TryTakeEnemyAIAction(SetStateTakingTurn))
                     {
-                        print("Taking action");
                         state = State.Busy;
                     }
                     else
@@ -61,6 +60,12 @@ public class EnemyAI : MonoBehaviour
 
 
     }
+    
+    private void SetStateTakingTurn()
+    {
+        timer = 0.5f;
+        state = State.TakingTurn;
+    }
     private void TurnSystem_OnTurnChangedEvent(object sender, EventArgs e)
     {
         if (!TurnSystem.Instance.IsPlayerTurn())
@@ -69,14 +74,8 @@ public class EnemyAI : MonoBehaviour
             timer = 2f;
         }
     }
-    private void SetStateTakingTurn()
-    {
-        timer = 0.5f;
-        state = State.TakingTurn;
-    }
     private bool TryTakeEnemyAIAction(Action onEnemyAIaCtionComplete)
     {
-        print("Enemy takes action");
         foreach (var enemyUnit in UnitManager.Instance.GetEnemyUnitList())
         {
             if(TryTakeEnemyAIAction(enemyUnit, onEnemyAIaCtionComplete))
@@ -95,29 +94,28 @@ public class EnemyAI : MonoBehaviour
 
         foreach (var baseAction in enemyUnit.GetBaseActionArray())
         {
-            if( !enemyUnit.CanSpendActionPoints(baseAction))
+            if (!enemyUnit.CanSpendActionPoints(baseAction))
             {
                 // Enemy cannot afford this action
                 continue;
             }
+
+            if (bestEnemyAIAction == null)
+            {
+                bestEnemyAIAction = baseAction.GetBestEnemyAIAction();
+                bestBaseAction = baseAction;
+            }
             else
             {
-                if(bestEnemyAIAction == null)
+                EnemyAIAction testEnemyAIAction = baseAction.GetBestEnemyAIAction();
+
+                if (testEnemyAIAction != null && testEnemyAIAction.actionValue > bestEnemyAIAction.actionValue)
                 {
-                    bestEnemyAIAction = baseAction.GetBestEnemyAIAction();
+                    bestEnemyAIAction = testEnemyAIAction;
                     bestBaseAction = baseAction;
                 }
-                else
-                {
-                    EnemyAIAction testEnemyAIAction = baseAction.GetBestEnemyAIAction();
-
-                    if (testEnemyAIAction != null && testEnemyAIAction.actionValue > bestEnemyAIAction.actionValue)
-                    {
-                        bestEnemyAIAction = testEnemyAIAction;
-                        bestBaseAction = baseAction;
-                    }
-                }
             }
+
         }
 
         if(bestEnemyAIAction != null && enemyUnit.TrySpendActionPointsForAction(bestBaseAction))

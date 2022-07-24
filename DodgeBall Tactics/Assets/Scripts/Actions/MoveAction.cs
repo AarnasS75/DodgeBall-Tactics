@@ -23,7 +23,10 @@ public class MoveAction : BaseAction
     }
     private void Update()
     {
-        if (!isActive) { return; }
+        if (!isActive) 
+        { 
+            return; 
+        }
 
         if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
         {
@@ -34,13 +37,14 @@ public class MoveAction : BaseAction
         else
         {
             OnStopMoving?.Invoke(this, EventArgs.Empty);
-            OnActionComplete();
+            ActionComplete();
         }
 
         
     }
     public override void TakeAction(GridPosition gridPosition, Action OnActionComplete)
     {
+        print("Take move action");
         targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
         OnStartMoving?.Invoke(this, EventArgs.Empty);
         ActionStart(OnActionComplete);

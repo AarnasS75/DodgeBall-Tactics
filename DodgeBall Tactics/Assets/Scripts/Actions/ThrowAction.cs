@@ -131,7 +131,6 @@ public class ThrowAction : BaseAction
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
                 {
                     // If tile position is outside of declared boundaries
-                    print("tile position is outside of declared boundaries");
                     continue;
                 }
 
@@ -144,7 +143,6 @@ public class ThrowAction : BaseAction
                 if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition))
                 {
                     // Grid position is empty, no Unit
-                    print("Grid position is empty, no Unit");
                     continue;
                 }
                 Unit targetUnit = LevelGrid.Instance.GetUnitAtGridposition(testGridPosition);
@@ -152,7 +150,6 @@ public class ThrowAction : BaseAction
                 if (targetUnit.IsEnemy() == unit.IsEnemy())
                 {
                     // Both units are on the same team
-                    print("Grid position is empty, no Unit");
                     continue;
                 }
                 validGridPositions.Add(testGridPosition);
@@ -173,10 +170,13 @@ public class ThrowAction : BaseAction
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
+        Unit targetUnit = LevelGrid.Instance.GetUnitAtGridposition(gridPosition);
+
+
         return new EnemyAIAction
         {
             gridPosition = gridPosition,
-            actionValue = 100
+            actionValue = 100 + Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized()) * 100f) // Targets unit with least health
         };
     }
     public int GetTargetCountAtPosition(GridPosition gridPosition)
