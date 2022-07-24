@@ -62,7 +62,7 @@ public class EnemyAI : MonoBehaviour
     
     private void SetStateTakingTurn()
     {
-        timer = 0.5f;
+        timer = 1.5f;
         state = State.TakingTurn;
     }
     private void TurnSystem_OnTurnChangedEvent(object sender, EventArgs e)
@@ -75,7 +75,7 @@ public class EnemyAI : MonoBehaviour
     }
     private bool TryTakeEnemyAIAction(Action onEnemyAIaCtionComplete)
     {
-        foreach (var enemyUnit in UnitManager.Instance.GetEnemyUnitList())
+        foreach (Unit enemyUnit in UnitManager.Instance.GetEnemyUnitList())
         {
             if(TryTakeEnemyAIAction(enemyUnit, onEnemyAIaCtionComplete))
             {

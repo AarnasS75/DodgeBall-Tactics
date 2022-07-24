@@ -38,8 +38,6 @@ public class MoveAction : BaseAction
             OnStopMoving?.Invoke(this, EventArgs.Empty);
             ActionComplete();
         }
-
-        
     }
     public override void TakeAction(GridPosition gridPosition, Action OnActionComplete)
     {
@@ -87,7 +85,7 @@ public class MoveAction : BaseAction
     }
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
-        int targetCountAtGridPosition = unit.GetThrowAction().GetTargetCountAtPosition(gridPosition);
+        int targetCountAtGridPosition = unit.GetAction<ThrowAction>().GetTargetCountAtPosition(gridPosition);
 
         return new EnemyAIAction
         {
@@ -96,3 +94,4 @@ public class MoveAction : BaseAction
         };
     }
 }
+ 

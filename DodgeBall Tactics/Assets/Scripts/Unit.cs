@@ -13,8 +13,6 @@ public class Unit : MonoBehaviour
 
     private GridPosition currentGridPosition;
     private HealthSystem healthSystem;
-    private MoveAction moveAction;
-    private ThrowAction throwAction;
     private BaseAction[] baseActionArray;
 
     private int actionPoints;
@@ -24,8 +22,6 @@ public class Unit : MonoBehaviour
         actionPoints = maxActionPoints;
 
         healthSystem = GetComponent<HealthSystem>();
-        moveAction = GetComponent<MoveAction>();
-        throwAction = GetComponent<ThrowAction>();
         baseActionArray = GetComponents<BaseAction>();
     }
     private void Start()
@@ -53,14 +49,19 @@ public class Unit : MonoBehaviour
 
         }
     }
-    public MoveAction GetMoveAction()
+    public T GetAction<T>() where T : BaseAction
     {
-        return moveAction;
-    }
-    public ThrowAction GetThrowAction()
-    {
-        return throwAction;
-    }
+        foreach (BaseAction baseAction in baseActionArray)
+        {
+            if (baseAction is T)
+            {
+                return (T)baseAction;
+            }
+        }
+        return null;
+    } 
+
+   
     // Get grid tile position, on which the unit is standing
     public GridPosition GetGridPosition()
     {

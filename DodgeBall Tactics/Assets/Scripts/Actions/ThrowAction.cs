@@ -172,7 +172,6 @@ public class ThrowAction : BaseAction
     {
         Unit targetUnit = LevelGrid.Instance.GetUnitAtGridposition(gridPosition);
 
-
         return new EnemyAIAction
         {
             gridPosition = gridPosition,

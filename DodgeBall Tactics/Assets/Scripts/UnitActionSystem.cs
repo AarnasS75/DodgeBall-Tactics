@@ -118,7 +118,7 @@ public class UnitActionSystem : MonoBehaviour
     private void SetSelectedUnit(Unit unit)
     {
         selectedUnit = unit;
-        SetSelectedAction(unit.GetMoveAction());           // Set default action to perform, when player is selected.
+        SetSelectedAction(unit.GetAction<MoveAction>());           // Set default action to perform, when player is selected.
         OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
     }
     public BaseAction GetSelectedAction()

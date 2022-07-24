@@ -53,7 +53,8 @@ public abstract class BaseAction : MonoBehaviour
     {
         List<EnemyAIAction> enemyAIActionList = new();
 
-        List<GridPosition> validGridPositionList = GetValidActionGridPositionList();
+        // Get all grid positions on which an action can be taken
+        List<GridPosition> validGridPositionList = GetValidActionGridPositionList();    
 
         foreach (GridPosition gridPosition in validGridPositionList)
         {
