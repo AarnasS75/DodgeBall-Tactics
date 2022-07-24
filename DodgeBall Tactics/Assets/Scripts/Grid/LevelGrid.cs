@@ -25,7 +25,7 @@ public class LevelGrid : MonoBehaviour
         }
 
         // Set grid size
-        gridSystem = new GridSystem(9, 4, 2f);
+        gridSystem = new GridSystem(8, 4, 2f);
         gridSystem.CreateDebugObjects(gridDebugObject);
     }
 

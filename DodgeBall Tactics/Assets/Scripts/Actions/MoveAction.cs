@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,7 +43,6 @@ public class MoveAction : BaseAction
     }
     public override void TakeAction(GridPosition gridPosition, Action OnActionComplete)
     {
-        print("Take move action");
         targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
         OnStartMoving?.Invoke(this, EventArgs.Empty);
         ActionStart(OnActionComplete);

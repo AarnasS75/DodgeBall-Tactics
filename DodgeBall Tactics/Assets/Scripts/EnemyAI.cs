@@ -47,7 +47,6 @@ public class EnemyAI : MonoBehaviour
                     }
                     else
                     {
-                        print("Enemies are out of actions");
                         // enemies are out of actions
                         TurnSystem.Instance.NextTurn();
                     }
@@ -80,10 +79,8 @@ public class EnemyAI : MonoBehaviour
         {
             if(TryTakeEnemyAIAction(enemyUnit, onEnemyAIaCtionComplete))
             {
-                print("Enemy throw action");
                 return true;
             }
-            print("Enemy throw action not available");
         }
         return false;
     }
