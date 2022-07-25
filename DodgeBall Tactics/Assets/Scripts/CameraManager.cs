@@ -13,8 +13,6 @@ public class CameraManager : MonoBehaviour
         BaseAction.OnAnyActionCompleted += BaseAction_OnAnyActionCompleted;
 
         HideActionCamera();
-        print(typeof(ThrowAction));
-
     }
 
     private void ShowActionCamera()

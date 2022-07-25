@@ -77,9 +77,9 @@ public class GridSystem
         else
         {
             return gridPosition.x >= 0 &&
-                   gridPosition.z >= 0 &&
-                   gridPosition.x < width &&
-                   gridPosition.z < length;
+               gridPosition.z >= 0 &&
+               gridPosition.x < width &&
+               gridPosition.z < length;
         }
     }
     public int GetWidth() => width;
