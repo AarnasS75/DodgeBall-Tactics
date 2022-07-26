@@ -86,7 +86,6 @@ public class ThrowAction : BaseAction
     private void ThrowBall()
     {
         OnThrowStart?.Invoke(this, EventArgs.Empty);
-        targetUnit.Damage(damageAmmount);
     }
 
     public override void TakeAction(GridPosition gridPosition, Action OnActionComplete)
@@ -110,22 +109,12 @@ public class ThrowAction : BaseAction
         return "Throw";
     }
 
-
-
-
-
-
-
-
-
     public override List<GridPosition> GetValidActionGridPositionList()
     {
         GridPosition unitGridPosition = unit.GetGridPosition();     // Getting units current position
 
         return GetValidActionGridPositionList(unitGridPosition);    // Checking if units position + action range are compatible
     }
-
-
 
     public List<GridPosition> GetValidActionGridPositionList(GridPosition unitPosition)
     {
@@ -167,20 +156,6 @@ public class ThrowAction : BaseAction
         }
         return validGridPositions;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public override int GetActionPointsCost()
     {

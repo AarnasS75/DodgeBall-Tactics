@@ -28,7 +28,7 @@ public class CameraManager : MonoBehaviour
         switch (sender)
         {
             case ThrowAction:
-                ShowActionCamera();
+                //ShowActionCamera();
                 break;
         }
     }  

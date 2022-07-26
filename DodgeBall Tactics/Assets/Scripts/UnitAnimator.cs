@@ -9,7 +9,6 @@ public class UnitAnimator : MonoBehaviour
     [SerializeField] private Transform ballPrefabTransform;
     [SerializeField] private Transform throwPointTransform;
 
-
     private void Awake()
     {
         if(TryGetComponent(out MoveAction moveAction))
@@ -28,6 +27,7 @@ public class UnitAnimator : MonoBehaviour
     {
         animator.SetTrigger("Throw_T");
         Instantiate(ballPrefabTransform, throwPointTransform.position, Quaternion.identity, transform);
+
     }
 
     private void MoveAction_OnStartMoving(object sender, EventArgs e)

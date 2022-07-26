@@ -76,6 +76,7 @@ public class GridSystem
         }
         else
         {
+            // Check the whole board
             return gridPosition.x >= 0 &&
                gridPosition.z >= 0 &&
                gridPosition.x < width &&
