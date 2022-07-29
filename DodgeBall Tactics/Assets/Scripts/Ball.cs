@@ -6,9 +6,11 @@ public class Ball : MonoBehaviour
 {
     Rigidbody rb;
 
-    [SerializeField] int damage = 5;
+    [SerializeField] private int damage;
     [SerializeField] private float throwForce = 10f;
     [SerializeField] private float destroyTime = 1f;
+
+    
 
     private bool destroy = false;
 
@@ -20,6 +22,7 @@ public class Ball : MonoBehaviour
     {
         Vector3 throwDirection = GetComponentInParent<ThrowAction>().GetThrowDirection();
         rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
+        transform.parent = null;
     }
     private void Update()
     {
@@ -32,39 +35,56 @@ public class Ball : MonoBehaviour
             }
         }
     }
-    public void SetDamage(int damage)
-    {
-        this.damage = damage;
-    }
-    
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("HitBox"))
         {
             collision.gameObject.GetComponentInParent<Unit>().Damage(damage);
-            CalculateBounceOff(collision);
-            
+            CalculateBounceOff(collision.transform);
+
             destroy = true;
         }
     }
-    void CalculateBounceOff(Collision collision)
+    void CalculateBounceOff(Transform collisionTransform)
     {
-        rb.velocity = Vector3.zero;
-        Vector3 bounceOffset = Vector3.zero;
-
-        int randomDir = Random.Range(0, 2);
-        switch (randomDir)
-        {
-            case 0:
-                bounceOffset = new Vector3(2, collision.transform.position.y, 2);
-                break;
-            case 1:
-                bounceOffset = new Vector3(-2, collision.transform.position.y, 2);
-                break;
-        }
         
+        Vector3 bounceOffset = Vector3.zero;
+        int randomDir = Random.Range(0, 3);
 
-        Vector3 newDirection = (collision.transform.position - (collision.transform.position + bounceOffset)).normalized;
+        if ((rb.velocity).normalized == Vector3.forward)
+        {
+            switch (randomDir)
+            {
+                case 0:
+                    bounceOffset = new Vector3(2, 0, -2);
+                    break;
+                case 1:
+                    bounceOffset = new Vector3(-2, 0, -2);
+                    break;
+                case 2:
+                    bounceOffset = Vector3.back * 2;
+                    break;
+            }
+        }
+        else if ((rb.velocity).normalized == Vector3.back)
+        {
+            switch (randomDir)
+            {
+                case 0:
+                    bounceOffset = new Vector3(2, 0, 2);
+                    break;
+                case 1:
+                    bounceOffset = new Vector3(-2, 0, 2);
+                    break;
+                case 2:
+                    bounceOffset = Vector3.forward * 2;
+                    break;
+            }
+        }
+
+        rb.velocity = Vector3.zero;
+        Vector3 newDirection = (collisionTransform.position - (collisionTransform.position + bounceOffset)).normalized;
 
         rb.AddForce(newDirection * throwForce, ForceMode.Impulse);
     }

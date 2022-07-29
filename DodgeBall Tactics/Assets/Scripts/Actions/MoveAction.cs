@@ -31,7 +31,7 @@ public class MoveAction : BaseAction
         {
             Vector3 moveDiection = (targetPosition - transform.position).normalized;
             transform.position += moveDiection * Time.deltaTime * moveSpeed;
-            transform.forward = Vector3.Lerp(transform.forward, moveDiection, Time.deltaTime * rotateSpeed);
+            //transform.forward = Vector3.Lerp(transform.forward, moveDiection, Time.deltaTime * rotateSpeed);
         }
         else
         {

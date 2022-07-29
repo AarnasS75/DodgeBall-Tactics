@@ -22,8 +22,8 @@ public class ThrowAction : BaseAction
     [SerializeField] private int maxThrowDistance = 4;
     private bool canThrowBall;
 
-    Vector3 aimDir;
-    float stateTimer;
+    private Vector3 aimDir;
+    private float stateTimer;
 
     private void Update()
     {
@@ -37,9 +37,9 @@ public class ThrowAction : BaseAction
         switch (state)
         {
             case State.Aiming:
-                aimDir = (targetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
-                float rotateSpeed = 10f;
-                transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * rotateSpeed);
+                aimDir = targetUnit.GetWorldPosition() - unit.GetWorldPosition();
+                //float rotateSpeed = 10f;
+                //transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * rotateSpeed);
                 break;
             case State.Shooting:
                 if (canThrowBall)
@@ -85,6 +85,7 @@ public class ThrowAction : BaseAction
 
     private void ThrowBall()
     {
+        aimDir.Normalize();
         OnThrowStart?.Invoke(this, EventArgs.Empty);
     }
 
@@ -166,7 +167,7 @@ public class ThrowAction : BaseAction
         return aimDir;
     }
     public Unit GetTargetUnit() => targetUnit;
-    public int GetMAxThrowDistnace() => maxThrowDistance;
+    public int GetMaxThrowDistance() => maxThrowDistance;
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {

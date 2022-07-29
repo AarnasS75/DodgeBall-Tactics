@@ -28,8 +28,6 @@ public class HealthSystem : MonoBehaviour
         {
             Die();
         }
-
-        print(transform + " Health left: " + health);
     }
     private void Die()
     {

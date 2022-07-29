@@ -9,7 +9,7 @@ public class UnitActionSystemUI : MonoBehaviour
     [SerializeField] private Transform actionButtonPrefab;
     [SerializeField] private Transform actionButtonContainerTransform;
 
-    [SerializeField] private TextMeshProUGUI actionPointsText;
+    //[SerializeField] private TextMeshProUGUI actionPointsText;
 
     List<ActionButtonUI> actionButtonUIList;
     private void Awake()
@@ -84,6 +84,6 @@ public class UnitActionSystemUI : MonoBehaviour
     private void UpdateActionPoints()
     {
         Unit unit = UnitActionSystem.Instance.GetSelectedUnit();
-        actionPointsText.text = "Action Points: " + unit.GetActionPoints();
+        //actionPointsText.text = "Action Points: " + unit.GetActionPoints();
     }
 }
