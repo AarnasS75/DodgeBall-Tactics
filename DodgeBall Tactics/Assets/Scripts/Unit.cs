@@ -31,7 +31,7 @@ public class Unit : MonoBehaviour
 
         TurnSystem.Instance.OnTurnChangedEvent += TurnSystem_OnTurnChangedEvent;
 
-        healthSystem.OnDead += healthSystem_OnDead; 
+        healthSystem.OnDead += HealthSystem_OnDead; 
         OnAnyUnitSpawned?.Invoke(this, EventArgs.Empty);
 
     }
@@ -106,10 +106,9 @@ public class Unit : MonoBehaviour
             OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
         }
     }
-    private void healthSystem_OnDead(object sender, EventArgs e)
+    private void HealthSystem_OnDead(object sender, EventArgs e)
     {
         LevelGrid.Instance.RemoveUnitAtGridPosition(currentGridPosition, this);
-       
         Destroy(gameObject);
 
         OnAnyUnitDead?.Invoke(this, EventArgs.Empty);

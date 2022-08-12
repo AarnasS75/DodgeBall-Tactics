@@ -11,6 +11,8 @@ public class UnitManager : MonoBehaviour
     public List<Unit> friendlyUnitList;
     public List<Unit> enemyUnitList;
 
+    public Unit activeUnit;
+
     private void Awake()
     {
         if(Instance == null)
@@ -55,14 +57,20 @@ public class UnitManager : MonoBehaviour
 
         if (unit.IsEnemy())
         {
-            enemyUnitList.Remove(unit);
+            enemyUnitList.Remove(unit); 
+            UnitActionSystem.Instance.SetRandomSelectedUnit(true);
         }
         else
         {
             friendlyUnitList.Remove(unit);
+            UnitActionSystem.Instance.SetRandomSelectedUnit(false);
         }
     }
     public List<Unit> GetUnitList() => unitList;
     public List<Unit> GetFriendlyUnitList() => friendlyUnitList;
     public List<Unit> GetEnemyUnitList() => enemyUnitList;
+    public void SetNewActiveUnit(Unit unit)
+    {
+        activeUnit = unit;
+    }
 }

@@ -56,10 +56,7 @@ public class EnemyAI : MonoBehaviour
 
                 break;
         }
-
-
     }
-    
     private void SetStateTakingTurn()
     {
         timer = 1.5f;

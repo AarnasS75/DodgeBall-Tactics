@@ -7,6 +7,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 487670269029187907, guid: 141c2094a0bb7ee4887926d68902b0f9,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2e4fcfe5f28a394488aefe5ee3861873, type: 2}
+    - target: {fileID: 2517036113744385514, guid: 141c2094a0bb7ee4887926d68902b0f9,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2e4fcfe5f28a394488aefe5ee3861873, type: 2}
     - target: {fileID: 5921465388788018974, guid: 141c2094a0bb7ee4887926d68902b0f9,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -117,5 +127,10 @@ PrefabInstance:
       propertyPath: isEnemy
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7310257928518116888, guid: 141c2094a0bb7ee4887926d68902b0f9,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2e4fcfe5f28a394488aefe5ee3861873, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 141c2094a0bb7ee4887926d68902b0f9, type: 3}

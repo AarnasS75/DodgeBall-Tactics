@@ -62,7 +62,14 @@ public class GridSystemVisual : MonoBehaviour
         UnitActionSystem.Instance.OnSelectedActionChanged += UnitActionSystem_OnSelectedActionChanged;
         LevelGrid.Instance.OnAnyUnitMovedGridPosition += LevelGrid_OnAnyUnitMovedGridPosition;
 
+        TurnSystem.Instance.OnTurnChangedEvent += TurnSystem_OnTurnChangedEvent;
+
         UpdateGridVisual();
+    }
+
+    private void TurnSystem_OnTurnChangedEvent(object sender, EventArgs e)
+    {
+        HideAllGridPositions();
     }
 
     public void HideAllGridPositions()
@@ -97,7 +104,6 @@ public class GridSystemVisual : MonoBehaviour
                 visualType = VisualType.White;
                 break;
             case ThrowAction throwAction:
-                print("Show throw distance");
                 visualType = VisualType.Red;
                 ShowGridPositonRange(selectedUnit.GetGridPosition(), throwAction.GetMaxThrowDistance(), VisualType.RedSoft);
                 break;
@@ -118,14 +124,14 @@ public class GridSystemVisual : MonoBehaviour
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition, selectedUnit))
                 {
                     // If tile position is outside of declared boundaries
+                       continue;
+                }
+
+                int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
+                if (testDistance > range)
+                {
                     continue;
                 }
-                
-                //int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
-                //if (testDistance > range)
-                //{
-                //    continue;
-                //}
                 gridPositionList.Add(testGridPosition);
             }
         }

@@ -17,7 +17,7 @@ public class ThrowAction : BaseAction
     public event EventHandler OnThrowStart;
 
     private State state;
-    [SerializeField] private Animator animator;
+
     private Unit targetUnit;
     [SerializeField] private int maxThrowDistance = 4;
     private bool canThrowBall;
@@ -37,7 +37,7 @@ public class ThrowAction : BaseAction
         switch (state)
         {
             case State.Aiming:
-                aimDir = targetUnit.GetWorldPosition() - unit.GetWorldPosition();
+                aimDir = (targetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
                 //float rotateSpeed = 10f;
                 //transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * rotateSpeed);
                 break;
@@ -61,12 +61,12 @@ public class ThrowAction : BaseAction
         switch (state)
         {
             case State.Aiming:
-                if(stateTimer <= 0f)
+                if (stateTimer <= 0f)
                 {
                     state = State.Shooting;
                     float timeAimingState = 0.4f;
                     stateTimer = timeAimingState;
-                
+
                 }
                 break;
             case State.Shooting:
@@ -85,7 +85,6 @@ public class ThrowAction : BaseAction
 
     private void ThrowBall()
     {
-        aimDir.Normalize();
         OnThrowStart?.Invoke(this, EventArgs.Empty);
     }
 
@@ -93,7 +92,7 @@ public class ThrowAction : BaseAction
     {
         targetUnit = LevelGrid.Instance.GetUnitAtGridposition(gridPosition);
         canThrowBall = true;
-       
+
         float timeAimingState = 1f;
         stateTimer = timeAimingState;
         state = State.Aiming;
@@ -116,6 +115,8 @@ public class ThrowAction : BaseAction
 
         return GetValidActionGridPositionList(unitGridPosition);    // Checking if units position + action range are compatible
     }
+
+
 
     public List<GridPosition> GetValidActionGridPositionList(GridPosition unitPosition)
     {
@@ -181,6 +182,6 @@ public class ThrowAction : BaseAction
     }
     public int GetTargetCountAtPosition(GridPosition gridPosition)
     {
-       return GetValidActionGridPositionList(gridPosition).Count;
+        return GetValidActionGridPositionList(gridPosition).Count;
     }
 }

@@ -62,7 +62,7 @@ public class UnitActionSystem : MonoBehaviour
     }
     private void HandleSelectedAction()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (InputManager.Instance.IsMouseButtonDown())
         {
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.Instance.GetPosition());
 
@@ -71,6 +71,7 @@ public class UnitActionSystem : MonoBehaviour
                 if (selectedUnit.TrySpendActionPointsForAction(selectedAction))
                 {
                     SetBusy();
+
                     selectedAction.TakeAction(mouseGridPosition, ClearBusy);
                     OnActionStarted?.Invoke(this, EventArgs.Empty);
                 }
@@ -90,9 +91,9 @@ public class UnitActionSystem : MonoBehaviour
     }
     private bool TryHandleUnitSelection()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (InputManager.Instance.IsMouseButtonDown())
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(InputManager.Instance.GetMouseScreenPosition());
             if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, unitMask))
             {
                 if (hit.transform.TryGetComponent(out Unit unit))
@@ -120,6 +121,17 @@ public class UnitActionSystem : MonoBehaviour
         selectedUnit = unit;
         SetSelectedAction(unit.GetAction<MoveAction>());           // Set default action to perform, when player is selected.
         OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
+    }
+    public void SetRandomSelectedUnit(bool isEnemy)
+    {
+        if (isEnemy)
+        {
+            selectedUnit = UnitManager.Instance.enemyUnitList[0];
+        }
+        else
+        {
+            selectedUnit = UnitManager.Instance.friendlyUnitList[0];
+        }
     }
     public BaseAction GetSelectedAction()
     {
